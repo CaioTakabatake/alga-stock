@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 import Header from "../Header/Header";
-import Button from "../Button/Button";
+import Button from "../../shared/Button/Button";
+import Container from "../../shared/Container";
 
 function TestComponent() {
   return (
@@ -16,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <Header title="AlgaStock" />
-      <div className="Container">
+      <Container>
         <Button
           onClick={() => {
             alert("test");
@@ -25,7 +26,7 @@ function App() {
         >
           Button
         </Button>
-      </div>
+      </Container>
     </div>
   );
 }
