@@ -1,62 +1,34 @@
 import React from "react";
 import "./Table.scss";
-import Products from "./Table.mockdata";
+import organizeData from "../../utils/organizeDataForTable";
 
-const headers: TableHeader[] = [
-  { key: "id", value: "#" },
-  { key: "Actions", value: "Actions" },
-  { key: "price", value: "Price", right: true },
-  { key: "stock", value: "Available Stock", right: true },
-];
-
-declare interface TableHeader {
+export interface TableHeader {
   key: string;
   value: string;
   right?: boolean;
 }
 
-type IndexedHeaders = {
-  [key: string]: TableHeader;
-};
+declare interface TableProps {
+  headers: TableHeader[];
+  data: any[];
 
-type OrganizedItem = {
-  [key: string]: any;
-};
+  enableActions?: boolean;
 
-function organizeData(
-  data: any[],
-  headers: TableHeader[]
-): [OrganizedItem[], IndexedHeaders] {
-  const indexedHeaders: IndexedHeaders = {};
-
-  headers.forEach((header) => {
-    indexedHeaders[header.key] = header;
-  });
-
-  const headerKeysInOrder = Object.keys(indexedHeaders);
-
-  const organizedData = data.map((item) => {
-    const organizedItem: OrganizedItem = {};
-
-    headerKeysInOrder.forEach((key) => {
-      organizedItem[key] = item[key];
-    });
-
-    organizedItem.$original = item;
-
-    return organizedItem;
-  });
-
-  return [organizedData, indexedHeaders];
+  onDelete?: (item: any) => void;
+  onDetail?: (item: any) => void;
+  onEdit?: (item: any) => void;
 }
 
-const Table = () => {
-  const [organizedData, indexedHeaders] = organizeData(Products, headers);
+const Table: React.FC<TableProps> = (props) => {
+  const [organizedData, indexedHeaders] = organizeData(
+    props.data,
+    props.headers
+  );
   return (
     <table className="AppTable">
       <thead>
         <tr>
-          {headers.map((header) => (
+          {props.headers.map((header) => (
             <th className={header.right ? "right" : ""} key={header.key}>
               {header.value}
             </th>
