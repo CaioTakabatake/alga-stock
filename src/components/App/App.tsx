@@ -15,26 +15,15 @@ function TestComponent() {
 }
 
 function App() {
-  const [street, setStreet] = useState("");
-
   return (
     <div className="App">
       <Header title="AlgaStock" />
       <Container>
-        <Button
-          onClick={() => {
-            alert("test");
-          }}
-          appendIcon={<TestComponent />}
-        >
-          Button
-        </Button>
-        <Input
-          label="Street"
-          placeholder="E.g.: 15th Avenue"
-          value={street}
-          onChange={(e) => setStreet(e.target.value)}
-        />
+        <ul>
+          {["Daniel", "Caio", "Thiago", "Caio"].map((name, index) => {
+            return <li key={index}>{name}</li>;
+          })}
+        </ul>
       </Container>
     </div>
   );
